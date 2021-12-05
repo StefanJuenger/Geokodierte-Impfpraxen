@@ -1,0 +1,27 @@
+---
+title: "Geokodierte Adressen von Impfpraxen für Fremdpatient:innen"
+output: github_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r load-packages, echo = FALSE}
+library(mapview)
+library(readr)
+```
+
+
+```{r load-data, echo = FALSE}
+KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded <-
+  readr::read_rds(
+    "./data/KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded.rds"
+  )
+```
+
+```{r map, echo = FALSE}
+mapview::mapview(
+  KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded
+)
+```
+
+
