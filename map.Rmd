@@ -1,12 +1,13 @@
 ---
-title: "Geokodierte Adressen von Impfpraxen für Fremdpatient:innen"
+title: "Impfpraxen für Fremdpatient:innen"
 output: 
   html_document
 editor_options: 
   chunk_output_type: console
 ---
 
-```{r load-packages, echo = FALSE}
+```{r load-packages, echo = FALSE, include = FALSE}
+library(dplyr)
 library(mapview)
 library(readr)
 ```
@@ -17,11 +18,20 @@ KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded <-
   readr::read_rds(
     "./data/KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded.rds"
   )
+
+KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded <-
+  KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded %>% 
+  dplyr::mutate(
+    label = paste0(Name, ", ", Straße, " ", Ort)
+  )
+
+
 ```
 
 ```{r map, echo = FALSE}
 mapview::mapview(
-  KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded
+  KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded["label"],
+  legend = FALSE
 )
 ```
 
