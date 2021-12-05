@@ -10,6 +10,8 @@ editor_options:
 library(dplyr)
 library(mapview)
 library(readr)
+library(leaflet)
+library(leafpop)
 ```
 
 
@@ -18,20 +20,18 @@ KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded <-
   readr::read_rds(
     "./data/KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded.rds"
   )
-
-KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded <-
-  KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded %>% 
-  dplyr::mutate(
-    label = paste0(Name, ", ", Straße, " ", Ort)
-  )
-
-
 ```
 
 ```{r map, echo = FALSE}
 mapview::mapview(
-  KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded["label"],
-  legend = FALSE
+  KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded %>% 
+    dplyr::select(
+      Titel, Name, Straße, Ort, Telefon
+    ),
+  legend = FALSE,
+  popup = popupTable(
+    KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded,
+    zcol = c("Titel", "Name", "Straße", "Ort", "Telefon"))
 )
 ```
 
