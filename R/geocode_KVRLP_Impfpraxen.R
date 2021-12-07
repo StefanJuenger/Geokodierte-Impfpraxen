@@ -22,6 +22,12 @@ KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded <-
     place = "Ort"
   )
 
+KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded <-
+  KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded %>%
+  dplyr::filter(
+    !is.na(LandkreisPraxis), !stringr::str_detect(LandkreisPraxis, "Stand")
+  )
+
 readr::write_rds(
   KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded,
   "./data/KVRLP_Impfpraxen_fuer_FremdpatientInnen_geocoded.rds"
